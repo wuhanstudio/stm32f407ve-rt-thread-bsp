@@ -16,23 +16,14 @@
 #include <rtdevice.h>
 
 #include <fal.h>
-#include <drv_xpt2046.h>
 
 #define GPIO_LED    GET_PIN(C, 0)
-
-#define TOUCH_DEVICE_NAME "xpt0"
-#define TOUCH_DEVICE_SPI "sspi1"
 
 int main(void)
 {
     rt_pin_mode(GPIO_LED, PIN_MODE_OUTPUT);
 
 	  fal_init();
-
-    xpt2046_user_init(TOUCH_DEVICE_SPI, GET_PIN(B, 2), GET_PIN(E, 2),
-                                        320, 240,
-                                        110, 240,
-                                        1980, 1870);
 
     while (1)
     {

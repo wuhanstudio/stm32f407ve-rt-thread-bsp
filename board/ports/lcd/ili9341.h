@@ -24,18 +24,6 @@
 */
 #define  ILI9341_INITCLEAR        1
 
-/* Analog touchscreen (only INTERFACE_MODE == 1, 8bit paralell IO mode)
-   - 0: touchscreen disabled
-   - 1: touchscreen enabled
-*/
-#define  ILI9341_TOUCH            0
-
-/* Touchscreen calibration data for 4 orientations */
-#define  TS_CINDEX_0        {1444723, 5348, -114234, 421806850, -131233, -975, 521525308}
-#define  TS_CINDEX_1        {1444723, -131233, -975, 521525308, -5348, 114234, -76518053}
-#define  TS_CINDEX_2        {1444723, -5348, 114234, -76518053, 131233, 975, -60658671}
-#define  TS_CINDEX_3        {1444723, 131233, 975, -60658671, 5348, -114234, 421806850}
-
 /* For multi-threaded or intermittent use, Lcd and Touchscreen simultaneous use can cause confusion (since it uses common I/O resources)
    Lcd functions wait for the touchscreen header, the touchscreen query is not executed when Lcd is busy.
    Note: If the priority of the Lcd is higher than that of the Touchscreen, it may end up in an infinite loop!
@@ -59,6 +47,14 @@ extern   LTDC_HandleTypeDef       hltdc;
 #endif  /* #if ILI9341_INTERFACE_MODE == 2 */
 
 //-----------------------------------------------------------------------------
-// ILI9341 physic resolution (in 0 orientation)
-#define  ILI9341_LCD_PIXEL_WIDTH  240
-#define  ILI9341_LCD_PIXEL_HEIGHT 320
+// ILI9341 physic resolution (horizontal)
+#if  ILI9341_ORIENTATION == 1 || ILI9341_ORIENTATION == 3
+	#define  ILI9341_LCD_PIXEL_WIDTH  320
+	#define  ILI9341_LCD_PIXEL_HEIGHT 240
+#endif
+
+// ILI9341 physic resolution (vertical)
+#if  ILI9341_ORIENTATION == 0 || ILI9341_ORIENTATION == 2
+	#define  ILI9341_LCD_PIXEL_WIDTH  240
+	#define  ILI9341_LCD_PIXEL_HEIGHT 320
+#endif

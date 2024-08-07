@@ -118,11 +118,12 @@ void lv_demos_show_help(void)
     }
 }
 
+#if LVGL_VERSION_MAJOR < 9
 static void btn_event_cb(lv_event_t * e)
 {
     lv_event_code_t code = lv_event_get_code(e);
     lv_obj_t * btn = lv_event_get_target(e);
-    if(code == LV_EVENT_CLICKED) {
+    if(code == LV_EVENT_PRESSED) {
         static uint8_t cnt = 0;
         cnt++;
 
@@ -146,6 +147,7 @@ void lv_example_get_started_1(void)
     lv_label_set_text(label, "Button");                     /*Set the labels text*/
     lv_obj_center(label);
 }
+#endif // LVGL_VERSION_MAJOR < 9
 
 void lv_user_gui_init(void)
 {
@@ -161,7 +163,9 @@ void lv_user_gui_init(void)
 #elif LV_USE_DEMO_STRESS
     lv_demos_create("stress");
 #else
+	#if LVGL_VERSION_MAJOR < 9
     lv_example_get_started_1();
+	#endif
+	lv_demos_show_help();
 #endif
-    lv_demos_show_help();
 }
