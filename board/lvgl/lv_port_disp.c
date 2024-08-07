@@ -35,7 +35,7 @@ static lv_disp_drv_t disp_drv;
 // Flush the content of the internal buffer the specific area on the display
 static void disp_flush(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
 {
-	  // lcd_drv->DrawRGBImage(area->x1, area->y1, area->x2 - area->x1, area->y2 - area->y1, (uint16_t*) color_p);
+    // lcd_drv->DrawRGBImage(area->x1, area->y1, area->x2 - area->x1, area->y2 - area->y1, (uint16_t*) color_p);
     int32_t x, y;
     for(y = area->y1; y <= area->y2; y++) {
         for(x = area->x1; x <= area->x2; x++) {
@@ -43,7 +43,7 @@ static void disp_flush(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_
             color_p++;
         }
     }
-	  lv_disp_flush_ready(disp_drv);
+    lv_disp_flush_ready(disp_drv);
 }
 #else
 static void vsync_wait_cb(lv_display_t *display)
@@ -55,9 +55,13 @@ static void disp_flush(lv_display_t *display, const lv_area_t *area, uint8_t *px
 {
     if (!lv_display_flush_is_last(display)) return;
 
-    R_GLCDC_BufferChange(&g_display0_ctrl,
-                         (uint8_t *) px_map,
-                         (display_frame_layer_t) DISPLAY_FRAME_LAYER_1);
+    int32_t x, y;
+    for(y = area->y1; y <= area->y2; y++) {
+        for(x = area->x1; x <= area->x2; x++) {
+            lcd_drv->WritePixel(x, y, *(uint16_t*)px_map);
+            px_map++;
+        }
+    }
 }
 #endif /* LVGL_VERSION_MAJOR < 9 */
 
@@ -89,7 +93,7 @@ void lv_port_disp_init(void)
     lv_display_t *disp = lv_display_create(LV_HOR_RES_MAX, LV_VER_RES_MAX);
     lv_display_set_flush_cb(disp, disp_flush);
     lv_display_set_flush_wait_cb(disp, vsync_wait_cb);
-    lv_display_set_buffers(disp, &fb_background[0][0], &fb_background[1][0], sizeof(fb_background[0]), LV_DISPLAY_RENDER_MODE_DIRECT);
+    lv_display_set_buffers(disp, buf_1, NULL, sizeof(buf_1), LV_DISPLAY_RENDER_MODE_DIRECT);
 #endif
 		
 		/* LCD Init */
