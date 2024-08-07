@@ -20,8 +20,9 @@
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#include <rtdevice.h>
 #include <drv_xpt2046.h>
-#include <drv_spi.h>
+#include <drv_soft_spi.h>
 
 #ifdef BSP_USING_XPT2046_TOUCH
 
@@ -89,7 +90,7 @@ static rt_size_t xpt2046_touch_readpoint(struct rt_touch_device *touch, void *bu
 
 static rt_err_t xpt2046_touch_control(struct rt_touch_device *touch, int cmd, void *arg)
 {
-
+	return 0;
 }
 
 static struct rt_touch_ops xpt2046_ops =
@@ -124,7 +125,7 @@ rt_xpt2046_t xpt2046_user_init(char *spi_bus_name, rt_base_t cs_pin, rt_base_t i
         dev_obj->min_raw_y = min_raw_y;
         dev_obj->max_raw_x = max_raw_x;
         dev_obj->max_raw_y = max_raw_y;
-		    dev_obj->spi = rt_device_find(dev_name);
+		    dev_obj->spi = (struct rt_spi_device *)rt_device_find(dev_name);
 
 		    struct rt_spi_configuration spi_config;
         spi_config.data_width = 8;
@@ -149,7 +150,7 @@ rt_xpt2046_t xpt2046_user_init(char *spi_bus_name, rt_base_t cs_pin, rt_base_t i
 					rt_sprintf(dev_name, "xpt%d", dev_num++);
 					if (dev_num == 255)
 					{
-						rt_device_destroy(&(dev_obj->parent));
+						rt_device_destroy((rt_device_t)&(dev_obj->parent));
 						return RT_NULL;
 					}
 				} while (rt_device_find(dev_name));
