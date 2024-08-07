@@ -102,7 +102,7 @@ INIT_COMPONENT_EXPORT(rt_hw_spi_flash_init);
 
 本 BSP 目前对外设的支持情况如下：
 
-| **片上外设** | **支持情况** | **备注**                        |
+| **片上外设** | **支持情况** | **备注**                         |
 | :----------- | :----------: | :------------------------------ |
 | GPIO         |     支持     | PA0, PA1... ---> PIN: 0, 1...81 |
 | UART         |     支持     | UART0 - UART6                   |
@@ -110,7 +110,7 @@ INIT_COMPONENT_EXPORT(rt_hw_spi_flash_init);
 | SPI          |     支持     | SPI0 -  SPI2                    |
 | ADC          |     支持     | ADC0 - ADC2                     |
 | TF CARD      |     支持     | SDIO                            |
-| SPI FLASH    |     支持     | SPI1                            |
+| SPI FLASH    |     支持     | SPI2                            |
 | LCD          |     支持     | FSMC 16Bit (ili9341)            |
-| **扩展模块** | **支持情况** | **备注**                        |
-| 暂无         |   暂不支持   | 暂不支持                        |
+| **扩展模块** | **支持情况** | **备注**                         |
+| 暂无         |   暂不支持   | 暂不支持                         |
