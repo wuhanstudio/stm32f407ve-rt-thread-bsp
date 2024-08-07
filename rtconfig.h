@@ -132,6 +132,7 @@
 #define RT_MMCSD_STACK_SIZE 1024
 #define RT_MMCSD_THREAD_PREORITY 22
 #define RT_MMCSD_MAX_PARTITION 16
+#define RT_SDIO_DEBUG
 #define RT_USING_SPI
 #define RT_USING_SPI_BITOPS
 #define RT_USING_SFUD
@@ -242,6 +243,12 @@
 
 /* LVGL: powerful and easy-to-use embedded GUI library */
 
+#define PKG_USING_LVGL
+#define PKG_LVGL_THREAD_PRIO 20
+#define PKG_LVGL_THREAD_STACK_SIZE 4096
+#define PKG_LVGL_DISP_REFR_PERIOD 5
+#define PKG_LVGL_USING_V080311
+#define PKG_LVGL_VER_NUM 0x080311
 /* end of LVGL: powerful and easy-to-use embedded GUI library */
 
 /* u8g2: a monochrome graphic library */
@@ -387,6 +394,7 @@
 
 #define BSP_USING_ONBOARD_LCD
 #define BSP_USING_XPT2046_TOUCH
+#define BSP_USING_LVGL
 #define BSP_USING_SPI_FLASH
 #define BSP_USING_FS
 #define BSP_USING_SDCARD_FATFS
