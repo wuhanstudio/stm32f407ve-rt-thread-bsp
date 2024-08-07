@@ -13,47 +13,37 @@
 #include <board.h>
 #include <rtthread.h>
 #include <drv_gpio.h>
-#ifndef RT_USING_NANO
 #include <rtdevice.h>
-#endif /* RT_USING_NANO */
 
-#include <lcd.h>
 #include <fal.h>
+#include <lcd.h>
+#include <drv_xpt2046.h>
 
 #define GPIO_LED    GET_PIN(C, 0)
 
 extern LCD_DrvTypeDef  *lcd_drv;
-
-#include <rtdevice.h>
-#include "drv_xpt2046.h"
+extern int touch_calibration(int argc, char* argv[]);
 
 int main(void)
 {
     rt_pin_mode(GPIO_LED, PIN_MODE_OUTPUT);
 
-	  fal_init();
+    fal_init();
 
-	  /* Touch Init */
-	  xpt2046_user_init("sspi1", GET_PIN(B, 2), GET_PIN(E, 2),
+    /* Touch Init */
+    xpt2046_user_init("sspi1", GET_PIN(B, 2), GET_PIN(E, 2),
                                         320, 240,
-                                        181, 189,
-                                        1871, 1048);
-    /* LCD Init */   
+                                        110, 240,
+                                        1980, 1870);
+    /* LCD Init */
     lcd_drv->Init();
-
     lcd_drv->DisplayOn();
-	
+	  lcd_drv->FillRect(0, 0, lcd_drv->GetLcdPixelWidth(), lcd_drv->GetLcdPixelHeight(), LCD_COLOR(255, 0, 0));
+
+		touch_calibration(0, RT_NULL);
+
     while (1)
     {
-			lcd_drv->FillRect(0, 0, lcd_drv->GetLcdPixelWidth(), lcd_drv->GetLcdPixelHeight(), LCD_COLOR(255, 0, 0));
-			rt_thread_mdelay(1000);
-
-			lcd_drv->FillRect(0, 0, lcd_drv->GetLcdPixelWidth(), lcd_drv->GetLcdPixelHeight(), LCD_COLOR(0, 255, 0));
-			rt_thread_mdelay(1000);
-
-			lcd_drv->FillRect(0, 0, lcd_drv->GetLcdPixelWidth(), lcd_drv->GetLcdPixelHeight(), LCD_COLOR(0, 0, 255));
-			rt_thread_mdelay(1000);
-
         rt_pin_write(GPIO_LED, PIN_HIGH);
         rt_thread_mdelay(500);
         rt_pin_write(GPIO_LED, PIN_LOW);
@@ -61,40 +51,6 @@ int main(void)
     }
 }
 
-int touch_test(int argc, char* argv[])
-{
-    //Find the touch device
-    rt_device_t touch = rt_device_find("xpt0");
-
-    if (touch == RT_NULL)
-    {
-        rt_kprintf("can't find device:%s\n", "xpt0");
-        while (1);
-    }
-    if (rt_device_open(touch, RT_DEVICE_FLAG_INT_RX) != RT_EOK)
-    {
-        rt_kprintf("open device failed!");
-        while (1);
-    }
-    while (1)
-    {
-        //Prepare variable to read out the touch data
-        struct rt_touch_data read_data;
-        rt_memset(&read_data, 0, sizeof(struct rt_touch_data));
-        if (rt_device_read(touch, 0, &read_data, 1) == 1)
-        {
-            //Print the touch coordinate and the corresponding information
-            rt_kprintf("%d %d %d %d %d\n",
-                        read_data.event,
-                        read_data.x_coordinate,
-                        read_data.y_coordinate,
-                        read_data.timestamp,
-                        read_data.width);
-        }
-        rt_thread_mdelay(10);
-    }
-}
-MSH_CMD_EXPORT(touch_test, touch screen test)
 
 /* 
 #include <lvgl.h>

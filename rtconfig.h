@@ -307,8 +307,6 @@
 
 /* touch drivers */
 
-#define PKG_USING_XPT2046_TOUCH
-#define PKG_USING_XPT2046_TOUCH_LATEST_VERSION
 /* end of touch drivers */
 /* end of peripheral libraries and drivers */
 
@@ -388,6 +386,7 @@
 /* Onboard Peripheral Drivers */
 
 #define BSP_USING_ONBOARD_LCD
+#define BSP_USING_XPT2046_TOUCH
 #define BSP_USING_SPI_FLASH
 #define BSP_USING_FS
 #define BSP_USING_SDCARD_FATFS

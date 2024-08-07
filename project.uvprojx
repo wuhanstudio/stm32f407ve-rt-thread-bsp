@@ -335,9 +335,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>--gnu</MiscControls>
-              <Define>__CLK_TCK=RT_TICK_PER_SECOND, RT_USING_LIBC, STM32F407xx, RT_USING_ARMLIBC, USE_HAL_DRIVER, __STDC_LIMIT_MACROS, __RTTHREAD__</Define>
+              <Define>RT_USING_ARMLIBC, STM32F407xx, RT_USING_LIBC, __RTTHREAD__, __CLK_TCK=RT_TICK_PER_SECOND, USE_HAL_DRIVER, __STDC_LIMIT_MACROS</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\components\libc\cplusplus;board\ports\fal;board\ports\lcd;..\libraries\HAL_Drivers\drivers;..\..\..\components\libc\posix\io\poll;packages\xpt2046-latest;applications;board;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\..\..\components\libc\posix\io\eventfd;..\..\..\components\drivers\include;..\..\..\components\drivers\touch;..\..\..\components\drivers\include;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\include;board\CubeMX_Config\Inc;..\..\..\components\finsh;..\..\..\components\libc\posix\io\epoll;..\libraries\HAL_Drivers\drivers\drv_flash;..\..\..\components\libc\compilers\common\extension\fcntl\octal;..\..\..\components\drivers\include;board\ports;..\libraries\HAL_Drivers\drivers\config;.;..\..\..\components\drivers\include;..\..\..\components\libc\compilers\common\include;..\..\..\components\libc\compilers\common\extension;packages\FlashDB-v1.1.2\inc;..\..\..\components\drivers\include;..\..\..\components\dfs\dfs_v1\filesystems\devfs;..\..\..\components\fal\inc;..\..\..\include;..\..\..\components\libc\posix\ipc;..\libraries\HAL_Drivers;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\..\..\components\drivers\spi\sfud\inc;..\libraries\HAL_Drivers\CMSIS\Include;..\..\..\components\drivers\spi;..\..\..\components\dfs\dfs_v1\filesystems\romfs;..\..\..\components\dfs\dfs_v1\include;..\..\..\libcpu\arm\common;..\..\..\components\drivers\include;..\..\..\components\dfs\dfs_v1\filesystems\elmfat;..\..\..\components\drivers\include</IncludePath>
+              <IncludePath>..\libraries\HAL_Drivers;board\CubeMX_Config\Inc;..\..\..\components\libc\posix\io\epoll;board;..\libraries\HAL_Drivers\drivers\drv_flash;applications;..\..\..\components\dfs\dfs_v1\filesystems\elmfat;..\libraries\HAL_Drivers\drivers;..\..\..\components\drivers\include;..\..\..\components\libc\compilers\common\extension\fcntl\octal;..\..\..\components\drivers\spi;board\ports\fal;..\..\..\components\libc\compilers\common\include;board\ports\lcd;..\..\..\components\drivers\spi\sfud\inc;..\..\..\components\drivers\include;..\..\..\components\fal\inc;..\..\..\libcpu\arm\common;..\..\..\components\dfs\dfs_v1\include;..\..\..\components\dfs\dfs_v1\filesystems\devfs;board\ports\touch;..\..\..\components\libc\posix\ipc;..\..\..\components\drivers\include;..\..\..\components\drivers\touch;..\..\..\components\libc\cplusplus;..\..\..\components\libc\posix\io\eventfd;..\..\..\components\dfs\dfs_v1\filesystems\romfs;..\..\..\components\drivers\include;board\ports;..\..\..\components\drivers\include;..\..\..\components\finsh;..\libraries\HAL_Drivers\drivers\config;.;..\..\..\components\libc\posix\io\poll;..\..\..\components\libc\compilers\common\extension;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;packages\FlashDB-v1.1.2\inc;..\..\..\libcpu\arm\cortex-m4;..\libraries\HAL_Drivers\CMSIS\Include;..\..\..\include;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\..\..\components\drivers\include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -382,14 +382,24 @@
           <GroupName>Applications</GroupName>
           <Files>
             <File>
+              <FileName>flashdb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>applications\flashdb.c</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>applications\main.c</FilePath>
             </File>
             <File>
-              <FileName>flashdb.c</FileName>
+              <FileName>touch_calib.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\applications\flashdb.c</FilePath>
+              <FilePath>.\applications\touch_calib.c</FilePath>
+            </File>
+            <File>
+              <FileName>touch_test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\touch_test.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2109,11 +2119,21 @@
               <FileType>1</FileType>
               <FilePath>board\ports\spi_flash_init.c</FilePath>
             </File>
+            <File>
+              <FileName>drv_xpt2046.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>board\ports\touch\drv_xpt2046.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Fal</GroupName>
           <Files>
+            <File>
+              <FileName>fal_partition.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\fal\src\fal_partition.c</FilePath>
+            </File>
             <File>
               <FileName>fal_flash.c</FileName>
               <FileType>1</FileType>
@@ -2125,19 +2145,14 @@
               <FilePath>..\..\..\components\fal\src\fal.c</FilePath>
             </File>
             <File>
-              <FileName>fal_partition.c</FileName>
+              <FileName>fal_flash_sfud_port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\components\fal\src\fal_partition.c</FilePath>
+              <FilePath>..\..\..\components\fal\samples\porting\fal_flash_sfud_port.c</FilePath>
             </File>
             <File>
               <FileName>fal_rtt.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\components\fal\src\fal_rtt.c</FilePath>
-            </File>
-            <File>
-              <FileName>fal_flash_sfud_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\components\fal\samples\porting\fal_flash_sfud_port.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2195,14 +2210,14 @@
           <GroupName>Finsh</GroupName>
           <Files>
             <File>
-              <FileName>shell.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\components\finsh\shell.c</FilePath>
-            </File>
-            <File>
               <FileName>msh_parse.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\components\finsh\msh_parse.c</FilePath>
+            </File>
+            <File>
+              <FileName>shell.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\finsh\shell.c</FilePath>
             </File>
             <File>
               <FileName>cmd.c</FileName>
@@ -2225,14 +2240,9 @@
           <GroupName>FlashDB</GroupName>
           <Files>
             <File>
-              <FileName>kvdb_type_string_sample.c</FileName>
+              <FileName>kvdb_type_blob_sample.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\FlashDB-v1.1.2\samples\kvdb_type_string_sample.c</FilePath>
-            </File>
-            <File>
-              <FileName>fdb_cmd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\FlashDB-v1.1.2\src\fdb_cmd.c</FilePath>
+              <FilePath>packages\FlashDB-v1.1.2\samples\kvdb_type_blob_sample.c</FilePath>
             </File>
             <File>
               <FileName>fdb_tsdb.c</FileName>
@@ -2240,19 +2250,14 @@
               <FilePath>packages\FlashDB-v1.1.2\src\fdb_tsdb.c</FilePath>
             </File>
             <File>
-              <FileName>fdb_file.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>packages\FlashDB-v1.1.2\src\fdb_file.c</FilePath>
-            </File>
-            <File>
               <FileName>kvdb_basic_sample.c</FileName>
               <FileType>1</FileType>
               <FilePath>packages\FlashDB-v1.1.2\samples\kvdb_basic_sample.c</FilePath>
             </File>
             <File>
-              <FileName>kvdb_type_blob_sample.c</FileName>
+              <FileName>fdb_cmd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\FlashDB-v1.1.2\samples\kvdb_type_blob_sample.c</FilePath>
+              <FilePath>packages\FlashDB-v1.1.2\src\fdb_cmd.c</FilePath>
             </File>
             <File>
               <FileName>fdb_kvdb.c</FileName>
@@ -2260,9 +2265,19 @@
               <FilePath>packages\FlashDB-v1.1.2\src\fdb_kvdb.c</FilePath>
             </File>
             <File>
+              <FileName>kvdb_type_string_sample.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\FlashDB-v1.1.2\samples\kvdb_type_string_sample.c</FilePath>
+            </File>
+            <File>
               <FileName>tsdb_sample.c</FileName>
               <FileType>1</FileType>
               <FilePath>packages\FlashDB-v1.1.2\samples\tsdb_sample.c</FilePath>
+            </File>
+            <File>
+              <FileName>fdb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\FlashDB-v1.1.2\src\fdb.c</FilePath>
             </File>
             <File>
               <FileName>fdb_utils.c</FileName>
@@ -2270,9 +2285,9 @@
               <FilePath>packages\FlashDB-v1.1.2\src\fdb_utils.c</FilePath>
             </File>
             <File>
-              <FileName>fdb.c</FileName>
+              <FileName>fdb_file.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\FlashDB-v1.1.2\src\fdb.c</FilePath>
+              <FilePath>packages\FlashDB-v1.1.2\src\fdb_file.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3211,29 +3226,19 @@
           <GroupName>Libraries</GroupName>
           <Files>
             <File>
-              <FileName>system_stm32f4xx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Source\Templates\system_stm32f4xx.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_ll_sdmmc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_sdmmc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_hal_crc.c</FileName>
+              <FileName>stm32f4xx_ll_fmc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_crc.c</FilePath>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_fmc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_hal_cryp.c</FileName>
+              <FileName>stm32f4xx_hal_pwr.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_cryp.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_hal_rng.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rng.c</FilePath>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pwr.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_hal_qspi.c</FileName>
@@ -3241,9 +3246,44 @@
               <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_qspi.c</FilePath>
             </File>
             <File>
+              <FileName>stm32f4xx_hal_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_sram.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_sram.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_cec.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_cec.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_stm32f4xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Source\Templates\system_stm32f4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_i2c.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32f4xx_hal_cortex.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_cortex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_flash_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_hal_uart.c</FileName>
@@ -3256,79 +3296,19 @@
               <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_hal_rcc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_hal_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_hal_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_hal_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_ll_fmc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_fmc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_hal_sram.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_sram.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_hal_dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dma.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_hal_rcc_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc_ex.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_hal_cryp_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_cryp_ex.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_hal_flash_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash_ex.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_hal_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_usart.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_hal_pwr_ex.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pwr_ex.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_hal_cec.c</FileName>
+              <FileName>stm32f4xx_hal_crc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_cec.c</FilePath>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_crc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_hal_i2c_ex.c</FileName>
+              <FileName>stm32f4xx_hal_cryp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_i2c_ex.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_ll_fsmc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_fsmc.c</FilePath>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_cryp.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_hal_flash_ramfunc.c</FileName>
@@ -3336,9 +3316,9 @@
               <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash_ramfunc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_hal_sd.c</FileName>
+              <FileName>stm32f4xx_ll_fsmc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_sd.c</FilePath>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_fsmc.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_hal_dma_ex.c</FileName>
@@ -3346,24 +3326,49 @@
               <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dma_ex.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_hal_pwr.c</FileName>
+              <FileName>stm32f4xx_hal_cryp_ex.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pwr.c</FilePath>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_cryp_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dma.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_rcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_i2c_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_i2c_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_rcc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_hal_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_spi.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>xpt2046_touch</GroupName>
-          <Files>
             <File>
-              <FileName>drv_xpt2046.c</FileName>
+              <FileName>stm32f4xx_hal_sd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>packages\xpt2046-latest\drv_xpt2046.c</FilePath>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_sd.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_rng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rng.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -8,6 +8,12 @@ menu "Onboard Peripheral Drivers"
         select BSP_USING_EXT_FMC_IO
         default n
 
+    config BSP_USING_XPT2046_TOUCH
+        bool "Enable XPT2046 Touch Device"
+        select RT_USING_TOUCH
+        select RT_TOUCH_PIN_IRQ
+        default n
+
     config BSP_USING_SPI_FLASH
         bool "Enable SPI FLASH (W25Q128 spi1)"
         select BSP_USING_SPI
