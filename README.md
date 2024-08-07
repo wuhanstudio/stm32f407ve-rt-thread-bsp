@@ -25,6 +25,58 @@ $ scons
 
 使用数据线连接开发板到 PC，使用USB转TTL模块连接PA9(MCU TX)和PA10(MCU RX)，上电。
 
+根据需要修改 LCD (FSMC 16bit A18) 引脚：
+```
+> drv_lcd_fsmc_16.h
+#define LCD_RST           C, 5  /* If not used leave it that way */
+#define LCD_BL            B, 0  /* If not used leave it that way */
+#define LCD_ADDR_BASE     0x60000000
+#define LCD_REGSELECT_BIT 18   /* A18, should be 16 for A16 */
+```
+当然，也需要修改对应引脚的初始化。
+```
+> drv_lcd_fsmc_16.c
+
+// PB0 Backlight
+ GPIO_InitStruct.Pin = GPIO_PIN_0;
+ GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+ GPIO_InitStruct.Pull = GPIO_PULLUP;
+ GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+ HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+// PC5 Reset
+GPIO_InitStruct.Pin = GPIO_PIN_5;
+GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+GPIO_InitStruct.Pull = GPIO_PULLUP;
+GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+```
+触摸屏的 XPT2046 使用的是软件 SPI，所以只需在 `menuconfig` 里修改
+```
+On-chip peripheral Drivers -->
+    [*] Enable soft SPI BUS -->
+        [*] Enable soft SPI1 BUS (software simulation) -->
+            --> 修改 SCK MISO MOSI 的引脚
+```
+由于默认挂载了 SPI2 上的 W25Q64 Nor Flash，根据需要修改 SPI Flash 的总线：
+```
+>spi_flash_init.c
+
+static int rt_hw_spi_flash_init(void)
+{
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    rt_hw_spi_device_attach("spi2", "spi20", GET_PIN(B, 12));
+
+    if (RT_NULL == rt_sfud_flash_probe("W25Q64", "spi20"))
+    {
+        return -RT_ERROR;
+    }
+
+    return RT_EOK;
+}
+INIT_COMPONENT_EXPORT(rt_hw_spi_flash_init);
+```
+
 #### 编译下载
 
 双击 project.uvprojx 文件，打开 MDK5 工程，编译并下载程序到开发板。
