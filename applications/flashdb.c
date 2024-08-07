@@ -33,11 +33,6 @@ static struct fdb_default_kv_node default_kv_table[] = {
         }
 }; /* int type KV */
 
-static fdb_time_t get_time(void)
-{
-    return (fdb_time_t)time(RT_NULL);
-}
-
 static void print_system_info(void)
 {
     struct fdb_blob blob;
