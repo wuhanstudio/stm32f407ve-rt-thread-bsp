@@ -214,6 +214,30 @@ const lv_img_dsc_t img_hand = {
   .data = img_hand_map,
 };
 
+lv_anim_t a;
+lv_meter_indicator_t * indic_min;
+lv_meter_indicator_t * indic_hour;
+uint32_t speed = 1;
+
+static void meter_event_cb(lv_event_t * e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    lv_obj_t * btn = lv_event_get_target(e);
+    if(code == LV_EVENT_PRESSED) {
+        speed++;
+
+				lv_anim_set_time(&a, speed*1000);     /*2 sec for 1 turn of the minute hand (1 hour)*/
+				lv_anim_set_var(&a, indic_min);
+				lv_anim_set_values(&a, 0, 60);
+				lv_anim_start(&a);
+
+				lv_anim_set_var(&a, indic_hour);
+				lv_anim_set_time(&a, speed * 24000);    /*24 sec for 1 turn of the hour hand*/
+				lv_anim_set_values(&a, 0, 60);
+				lv_anim_start(&a);
+		}
+}
+
 /**
  * A clock from a meter
  */
@@ -238,23 +262,26 @@ void lv_example_meter_3(void)
     LV_IMG_DECLARE(img_hand)
 
     /*Add a the hands from images*/
-    lv_meter_indicator_t * indic_min = lv_meter_add_needle_img(meter, scale_min, &img_hand, 5, 5);
-    lv_meter_indicator_t * indic_hour = lv_meter_add_needle_img(meter, scale_min, &img_hand, 5, 5);
+    indic_min = lv_meter_add_needle_img(meter, scale_min, &img_hand, 5, 5);
+    indic_hour = lv_meter_add_needle_img(meter, scale_min, &img_hand, 5, 5);
 
     /*Create an animation to set the value*/
-    lv_anim_t a;
     lv_anim_init(&a);
     lv_anim_set_exec_cb(&a, set_value);
-    lv_anim_set_values(&a, 0, 60);
     lv_anim_set_repeat_count(&a, LV_ANIM_REPEAT_INFINITE);
-    lv_anim_set_time(&a, 2000);     /*2 sec for 1 turn of the minute hand (1 hour)*/
+
+    lv_anim_set_time(&a, speed*1000);     /*2 sec for 1 turn of the minute hand (1 hour)*/
     lv_anim_set_var(&a, indic_min);
+    lv_anim_set_values(&a, 0, 60);
     lv_anim_start(&a);
 
     lv_anim_set_var(&a, indic_hour);
-    lv_anim_set_time(&a, 24000);    /*24 sec for 1 turn of the hour hand*/
+    lv_anim_set_time(&a, speed * 24000);    /*24 sec for 1 turn of the hour hand*/
     lv_anim_set_values(&a, 0, 60);
     lv_anim_start(&a);
+		
+		lv_obj_add_event_cb(meter, meter_event_cb, LV_EVENT_ALL, NULL);           /*Assign a callback to the clock*/
+
 }
 #endif // LVGL_VERSION_MAJOR < 9
 
