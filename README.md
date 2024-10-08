@@ -13,10 +13,10 @@
 本 BSP 为开发者提供 MDK4、MDK5 工程，并且支持 GCC 开发环境，也可使用RT-Thread Studio开发。下面以 MDK5 开发环境为例，介绍如何将系统运行起来。
 
 ```
-$ git clone https://github.com/RT-Thread/rt-thread/tree/master/bsp/stm32/stm32f407-lckfb-skystar/board/CubeMX_Config
+$ git clone https://github.com/RT-Thread/rt-thread
 $ cd rt-thread/bsp/stm32/
-$ git clone https://github.com/wuhanstudio/stm32f407-vet6-ili9341
-$ cd stm32f407-vet6-ili9341
+$ git clone https://github.com/wuhanstudio/stm32f407ve-rt-thread-bsp
+$ cd stm32f407ve-rt-thread-bsp
 $ pkgs --update
 $ scons
 ```
